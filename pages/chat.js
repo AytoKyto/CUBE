@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
-import { TextField, Grid, Typography } from "@mui/material";
+import { TextField, Grid, Typography, Button } from "@mui/material";
 
 export default function Chat({}) {
   return (
@@ -19,10 +19,10 @@ export default function Chat({}) {
             <Grid item sx={{ height: "10vh" }}>
               Infos - Nom de la conversation
             </Grid>
-            <Grid item sx={{ height: "60vh" }}>
+            <Grid item sx={{ height: "57vh" }}>
               <Typography>Messages</Typography>
             </Grid>
-            <Grid item>
+            <Grid item sx={{ display: "flex", justifyContent: "center", alignItems: "center", mb: 2}}>
               <TextField
                 id="lastName"
                 fullWidth
@@ -30,13 +30,17 @@ export default function Chat({}) {
                 multiline
                 variant="filled"
                 sx={{
-                  width: "100%",
+                  width: "90%",
+                  mr: 2,
                   "& textarea": { minHeight: "5vh" },
                   minHeight: "10vh",
                 }}
                 //value=""
                 onChange={() => console.log("type message")}
               />
+                 <Button variant="borderBtn" size="small" color="primary">
+              Envoyer
+            </Button>
             </Grid>
           </Grid>
         </Grid>

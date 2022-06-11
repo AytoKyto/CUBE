@@ -34,6 +34,8 @@ const theme = createTheme(
         blue: "#000091",
         white: "#FFFFFF",
         red: "#E1000F",
+        lightEcume: "#869ECE",
+        mediumEcume: "#465F9D",
         mediumCumulus: "#7AB18E",
         lightCumulus: "#417DC4",
         darkCumulus: "#3558A2",

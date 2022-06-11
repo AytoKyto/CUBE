@@ -3,19 +3,20 @@ import AuthContext from "../context/authContext";
 import SocketIOClient from "socket.io-client";
 import Layout from "../components/Layout/Layout";
 import {
-  TextField,
   Grid,
   Typography,
   Button,
   Badge,
   Avatar,
   Stack,
+  TextField,
 } from "@mui/material";
 
 export default function Chat({}) {
   const { session, fetchProfile, isAuthenticated, token } =
     useContext(AuthContext);
   const [user, setUser] = useState({});
+  const [avatar, setAvatar] = useState("");
   const inputRef = useRef(null);
   const [chat, setChat] = useState([]);
   const [msg, setMsg] = useState("");
@@ -25,6 +26,7 @@ export default function Chat({}) {
       try {
         const user = await fetchProfile(token);
         setUser(`${user?.firstName} ${user?.lastName}`);
+        setAvatar(`${user?.profilePic}`);
       } catch (err) {}
     };
 
@@ -84,27 +86,56 @@ export default function Chat({}) {
   };
   return (
     <Layout title="Cube | Chat" withSidebar={false}>
-      <Grid container flexDirection={"row"}>
-        <Grid item xs={2} sx={{ borderRight: "1px solid red", height: "80vh" }}>
-          <Typography>Conversations</Typography>
+      <Grid container flexDirection={"row"} maxHeight="80vh">
+        <Grid item xs={2} sx={{ backgroundColor: `rgba(65, 95, 157, 0.15)` }}>
+          <Grid container flexDirection="column" height={"80vh"}>
+            <Grid
+              item
+              sx={{
+                minHeight: "10vh",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography>Conversations</Typography>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={10}>
-          <Grid
-            container
-            flexDirection={"column"}
-            justifyContent="space-evenly"
-            sx={{ pl: 4 }}
-          >
-            <Grid item sx={{ height: "10vh" }}>
-              Infos - Nom de la conversation
+          <Grid container flexDirection={"column"} height={"80vh"}>
+            <Grid
+              item
+              sx={{
+                minHeight: "10vh",
+                backgroundColor: "gov.blue",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h6" sx={{ ml: 2, color: "gov.white" }}>
+                Nom de la conversation
+              </Typography>
             </Grid>
-            <Grid item sx={{ height: "57vh" }}>
-              <Typography>Messages</Typography>
+            <Grid
+              item
+              sx={{
+                overflowY: "scroll",
+                height: "60vh",
+                ml: 3,
+                mb: "10vh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: chat.length === 0 ? "center" : "flex-start",
+                alignItems: chat.length === 0 ? "center" : "flex-start",
+              }}
+            >
+              {chat.length === 0 && <Typography>Aucun Message</Typography>}
               {chat.map((chat, i) => (
                 <Stack
                   key={"msg_" + i}
                   direction="row"
-                  alignItems="center"
+                  alignItems="start"
                   sx={{ my: 2 }}
                 >
                   <Badge
@@ -119,22 +150,25 @@ export default function Chat({}) {
                       },
                     }}
                   >
-                    <Avatar
-                      alt={`${user?.firstName}`}
-                      src={`${user?.profilePic}`}
-                    />
+                    <Avatar alt={chat.user} src={`${avatar}`} />
                   </Badge>
                   <Stack>
                     <Stack
                       direction="row"
                       alignItems="center"
-                      justifyContent="center"
+                      justifyContent="start"
                     >
-                      <Typography variant="subtitle2" sx={{ ml: 1 }}>
-                        {user} -
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ ml: 1, color: "gray" }}
+                      >
+                        {user}
                       </Typography>
-                      <Typography variant="subtitle2" sx={{ ml: 1 }}>
-                        inserer date
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ ml: 1, color: "gray" }}
+                      >
+                        -inserer date
                       </Typography>
                     </Stack>
                     <Typography variant="body2" sx={{ ml: 1 }}>
@@ -150,20 +184,22 @@ export default function Chat({}) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                mb: 2,
+                width: "80vw",
+                position: "fixed",
+                bottom: 0,
+                backgroundColor: "white",
               }}
             >
               <TextField
-                id="lastName"
+                id="message"
                 fullWidth
-                label="Message"
                 multiline
-                variant="filled"
                 sx={{
                   width: "90%",
                   mr: 2,
                   "& textarea": { minHeight: "5vh" },
-                  minHeight: "10vh",
+                  height: "10vh",
+                  overflowY: "scroll",
                 }}
                 value={msg}
                 onChange={(e) => {

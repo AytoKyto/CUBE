@@ -241,22 +241,6 @@ export default function Resource({
   return (
     <Layout title={`Cube | ${resource.title}`} withSidebar withFooter>
       <Grid container flexDirection="column">
-        {isAuthenticated && (
-          <IconButton
-            color="primary"
-            onClick={() => console.log("openchat")}
-            sx={{
-              position: "fixed",
-              bottom: 50,
-              right: 20,
-              backgroundColor: "gov.lightCumulus",
-              zIndex: 1600,
-              opacity: 0.8
-            }}
-          >
-            <ChatBubbleOutlineIcon sx={{ color: "gov.white", padding: 1 }} />
-          </IconButton>
-        )}
         <Grid container flexDirection="row" sx={{ mb: 3 }}>
           <Breadcrumbs aria-label="breadcrumb">
             <Link underline="hover" color="inherit" href="/">

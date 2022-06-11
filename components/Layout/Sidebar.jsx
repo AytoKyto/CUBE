@@ -46,6 +46,11 @@ export default function Sidebar() {
               <Button variant="textBtn">Mon profil</Button>
             </ListItem>
           </Link>
+          <Link href="/chat">
+            <ListItem>
+              <Button variant="textBtn">Mes conversations</Button>
+            </ListItem>
+          </Link>
           <Link href="/admin">
             <ListItem>
               {(role === "admin" || role === "moderateur") && (

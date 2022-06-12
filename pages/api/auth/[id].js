@@ -120,6 +120,7 @@ export default function auth(req, res) {
       hasEvents: [],
       hasEventsCreated: [],
       likes: [],
+      conversations: [],
       role: ObjectId("61e165463d88f191f3f4e0d4"),
       validationStatus: false,
       createdAt: Date.now(),

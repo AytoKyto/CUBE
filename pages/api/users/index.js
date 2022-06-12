@@ -135,6 +135,10 @@ export default function users(req, res) {
  *           type: array
  *           description: Les ressources favorites de l'utilisateur.
  *           example: ["61e165463d88f191f3f4e0d4"]
+ *         conversations:
+ *           type: array
+ *           description: Les conversations liées à l'utilisateur.
+ *           example: ["61e165463d88f191f3f4e0d4"]
  *         role:
  *           type: string
  *           description: Le rôle de l'utilisateur.

@@ -16,6 +16,7 @@ export default function Chat({}) {
   const { session, fetchProfile, isAuthenticated, token } =
     useContext(AuthContext);
   const [user, setUser] = useState({});
+  const [conversations, setConversations] = useState([]);
   const [avatar, setAvatar] = useState("");
   const inputRef = useRef(null);
   const [chat, setChat] = useState([]);
@@ -25,8 +26,10 @@ export default function Chat({}) {
     const getProfile = async () => {
       try {
         const user = await fetchProfile(token);
+        console.log(user);
         setUser(`${user?.firstName} ${user?.lastName}`);
         setAvatar(`${user?.profilePic}`);
+        setConversations(user.conversations);
       } catch (err) {}
     };
 
@@ -87,19 +90,37 @@ export default function Chat({}) {
   return (
     <Layout title="Cube | Chat" withSidebar={false}>
       <Grid container flexDirection={"row"} maxHeight="80vh">
-        <Grid item xs={2} sx={{ backgroundColor: `rgba(65, 95, 157, 0.15)` }}>
-          <Grid container flexDirection="column" height={"80vh"}>
+        <Grid item xs={2}>
+          <Grid
+            container
+            flexDirection="column"
+            height={"80vh"}
+            sx={{ backgroundColor: "white" }}
+          >
             <Grid
               item
               sx={{
                 minHeight: "10vh",
+                flexDirection: "column",
                 justifyContent: "center",
                 display: "flex",
                 alignItems: "center",
+                backgroundColor: `rgba(65, 95, 157, 0.15)`,
               }}
             >
               <Typography>Conversations</Typography>
             </Grid>
+            <Stack
+              justifyContent={
+                conversations.length === 0 ? "center" : "flex-start"
+              }
+              alignItems={conversations.length === 0 ? "center" : "flex-start"}
+              sx={{ height: "60vh", mb: "10vh" }}
+            >
+              {conversations.length === 0 && (
+                <Typography>Aucune conversation</Typography>
+              )}
+            </Stack>
           </Grid>
         </Grid>
         <Grid item xs={10}>
@@ -122,7 +143,6 @@ export default function Chat({}) {
               sx={{
                 overflowY: "scroll",
                 height: "60vh",
-                ml: 3,
                 mb: "10vh",
                 display: "flex",
                 flexDirection: "column",
